@@ -20,6 +20,9 @@
           <input
             v-if="data.input.type === 'text'"
             :placeholder="data.input.placeholder"
+            :value="data.input.value"
+            @input="handleOnchanInput($event, data)"
+            @blur="handleBlur(data)"
           />
         </input-text-vue>
         <input-file-vue v-if="data.input.type === 'file'">
@@ -29,6 +32,11 @@
           <input :type="data.input.type" />
           <label>{{ data.input.placeholder }}</label>
         </input-radio>
+        <error-message-vue>
+          <template v-if="data.status" v-slot:errors>
+            <p v-if="data.status">{{ data.messageError }}</p>
+          </template>
+        </error-message-vue>
       </div>
     </div>
   </div>
@@ -40,6 +48,7 @@ import LableVue from "../slot/Lable.vue";
 import InputTextVue from "../slot/InputText.vue";
 import InputFileVue from "../slot/InputFile.vue";
 import InputRadio from "../slot/InputRadio.vue";
+import ErrorMessageVue from "../slot/ErrorMessage.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "FormInsuranceVue",
@@ -49,6 +58,7 @@ export default {
     InputTextVue,
     InputFileVue,
     InputRadio,
+    ErrorMessageVue,
   },
   // inject: ["msg", "formInsurance"],
 
@@ -56,6 +66,7 @@ export default {
     return {
       // formInsurances: this.formInsurance,
       //   datames: this.msg,
+      inputSigin: [],
     };
   },
   created() {
@@ -68,6 +79,27 @@ export default {
     ...mapGetters(["getInsurances"]),
     formInsurances() {
       return this.getInsurances.flat(1);
+    },
+  },
+  methods: {
+    handleOnchanInput(event, form) {
+      form.status = false;
+      form.messageError = "";
+      const result = {
+        name: form,
+        value: (form.input.value = event.target.value),
+      };
+      this.inputSigin.push(result);
+
+      // this.$emit("handleOnchanInput", this.inputSigin);
+    },
+    handleBlur(value) {
+      console.log("check bluer", value);
+      if (!value.input.value.trim() && value.required) {
+        value.status = true;
+        // value.messageError = `This field  is required`;
+        value.messageError = `このフィールド${value.lable}は必須です`;
+      }
     },
   },
 };

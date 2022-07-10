@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div>
+      {{ currentPage }}
       <!-- <img src="./assets/education/input-seach.png" /> -->
     </div>
     <header-vue></header-vue>
@@ -14,6 +15,7 @@
         @handleOnchanInput="handleOnchanInput"
         ref="step2"
       ></step2-form-vue>
+      <form-step3-vue v-if="currentPage === 3"></form-step3-vue>
     </div>
   </div>
 </template>
@@ -23,6 +25,7 @@
 import HeaderVue from "./components/Header.vue";
 import FormStepVue from "./components/step1/FormStep.vue";
 import Step2FormVue from "./components/step2/Step2Form.vue";
+import FormStep3Vue from "./components/step3/FormStep3.vue";
 import { mapState } from "vuex";
 export default {
   name: "App",
@@ -30,6 +33,7 @@ export default {
     HeaderVue,
     FormStepVue,
     Step2FormVue,
+    FormStep3Vue,
     // ButtonVue,
   },
   data() {

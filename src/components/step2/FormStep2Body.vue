@@ -32,16 +32,16 @@
     <div class="form-education">
       <form-education-vue></form-education-vue>
     </div>
-    <div class="form-insurance">
+    <!-- <div class="form-insurance">
       <form-insurance-vue></form-insurance-vue>
     </div>
-    <!-- <div class="form-salary">
+    <div class="form-salary">
       <form-salary-vue></form-salary-vue>
-    </div> -->
-    <!-- <div class="form-resident">
+    </div>
+    <div class="form-resident">
       <form-resident-vue></form-resident-vue>
-    </div> -->
-    <!-- <div class="form-sigin-address">
+    </div>
+    <div class="form-sigin-address">
       <form-sigin-address></form-sigin-address>
     </div> -->
   </div>

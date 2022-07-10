@@ -39,17 +39,16 @@
                   @input="handleOnchanInput($event, data)"
                   @blur="handleBlur(data)"
                 />
-                <error-message-vue>
-                  <template v-if="data.status" v-slot:errors>
-                    <p v-if="data.status">{{ data.messageError }}</p>
-                  </template>
-                </error-message-vue>
-                <!-- <input :type="data.input.type" class="input-date-ctn" /> -->
               </template>
             </input-date-vue>
           </div>
           <div v-if="data.input.type === 'select'">
-            <select class="education-select">
+            <select
+              class="education-select"
+              :class="{ inputBlur: data.status }"
+              @input="handleOnchanInput($event, data)"
+              @blur="handleBlur(data)"
+            >
               <option
                 v-for="slecteducation in data.slecteducations"
                 :key="slecteducation.id"
@@ -67,18 +66,38 @@
                   alt="icon seach"
                 />
               </span>
-              <input class="input-text" :placeholder="data.input.placeholder" />
+              <input-text-vue>
+                <template v-slot:inputText>
+                  <input
+                    class="input-text"
+                    :class="{ inputBlur: data.status }"
+                    :placeholder="data.input.placeholder"
+                    :value="data.input.value"
+                    @input="handleOnchanInput($event, data)"
+                    @blur="handleBlur(data)"
+                  />
+                </template>
+              </input-text-vue>
             </div>
           </div>
           <div v-if="data.input.type === 'text'">
-            <input
-              class="input-text"
-              :placeholder="data.input.placeholder"
-              :value="data.input.value"
-              @input="handleOnchanInput($event, data)"
-            />
+            <input-text-vue>
+              <template v-slot:inputText>
+                <input
+                  class="input-text"
+                  :placeholder="data.input.placeholder"
+                  :value="data.input.value"
+                  @input="handleOnchanInput($event, data)"
+                />
+              </template>
+            </input-text-vue>
           </div>
         </div>
+        <error-message-vue>
+          <template v-if="data.status && data.required" v-slot:errors>
+            <p v-if="data.status">{{ data.messageError }}</p>
+          </template>
+        </error-message-vue>
       </div>
       <div class="add-education">
         <img src="../../assets/education/add-education.png" class="icon-add" />
@@ -93,6 +112,7 @@
 import TitleVue from "../slot/Title.vue";
 import DescriptionVue from "../slot/Description.vue";
 import InputDateVue from "../slot/InputDate.vue";
+import InputTextVue from "../slot/InputText.vue";
 import LableVue from "../slot/Lable.vue";
 import ErrorMessageVue from "../slot/ErrorMessage.vue";
 import { mapGetters } from "vuex";
@@ -103,6 +123,7 @@ export default {
     TitleVue,
     DescriptionVue,
     InputDateVue,
+    InputTextVue,
     LableVue,
     ErrorMessageVue,
   },
@@ -111,6 +132,7 @@ export default {
     return {
       // mesData: this.msg,
       // dataEducatioms: this.formEducations,
+      inputSigin: [],
     };
   },
   props: {
@@ -147,10 +169,10 @@ export default {
     },
     handleBlur(value) {
       console.log("check bluer", value);
-      if (!value.input.value.trim()) {
+      if (!value.input.value.trim() && value.required) {
         value.status = true;
         // value.messageError = `This field  is required`;
-        value.messageError = `This field ${value.lable}  is required`;
+        value.messageError = `このフィールド${value.lable}は必須です`;
       }
     },
   },
@@ -210,11 +232,20 @@ export default {
     border-radius: 4px;
     border: 1px solid #dcdcdc;
   }
+  .inputBlur {
+    border: 1px solid red;
+    outline: none;
+  }
   .education-select {
     width: 95%;
     padding: 12px;
     border-radius: 4px;
     border: 1px solid #dcdcdc;
+    outline: none;
+  }
+  .inputBlur {
+    border: 1px solid red;
+    outline: none;
   }
   .input-text {
     padding: 12px;
@@ -225,10 +256,14 @@ export default {
   }
   .education-icon-srach-wapper {
     position: relative;
+    .inputBlur {
+      border: 1px solid red;
+      outline: none;
+    }
     .education-icon-seach {
       position: absolute;
       right: 10%;
-      top: 20%;
+      top: 13%;
     }
   }
   .add-education {

@@ -40,11 +40,6 @@
             <span v-if="!form.required">
               <input class="input-text" />
             </span>
-            <error-message-vue>
-              <template v-if="form.status" v-slot:errors>
-                <p v-if="form.status">{{ form.messageError }}</p>
-              </template>
-            </error-message-vue>
           </input-text-vue>
           <input-radio-vue v-if="form.input.type === 'radio'">
             <template v-slot:radio>
@@ -54,17 +49,14 @@
                     <input
                       :type="radio.type"
                       :class="{ inputBlur: form.status }"
+                      :value="radio.value"
+                      v-model="inputRadio"
                     />
                     <label class="radio-lable">{{ radio.lable }}</label>
                   </div>
                 </div>
               </div>
             </template>
-            <error-message-vue>
-              <template v-if="form.status" v-slot:errors>
-                <p v-if="form.status">{{ form.messageError }}</p>
-              </template>
-            </error-message-vue>
           </input-radio-vue>
           <input-date-vue v-if="form.input.type === 'date'">
             <template v-slot:inputDate>
@@ -77,13 +69,13 @@
                 @blur="handleBlur(form)"
               />
             </template>
-            <error-message-vue>
-              <template v-if="form.status" v-slot:errors>
-                <p v-if="form.status">{{ form.messageError }}</p>
-              </template>
-            </error-message-vue>
           </input-date-vue>
         </div>
+        <error-message-vue>
+          <template v-if="form.status" v-slot:errors>
+            <p v-if="form.status">{{ form.messageError }}</p>
+          </template>
+        </error-message-vue>
       </div>
     </div>
   </div>
@@ -114,6 +106,7 @@ export default {
     return {
       // siginInformations: this.siginInformations,
       inputSigin: [],
+      inputRadio: "female",
     };
   },
   created() {
@@ -141,10 +134,12 @@ export default {
       // this.$emit("handleOnchanInput", this.inputSigin);
     },
     handleBlur(value) {
+      console.log(value);
       if (!value.input.value.trim()) {
         value.status = true;
         // value.messageError = `This field  is required`;
-        value.messageError = `This field ${value.lable}  is required`;
+        value.messageError = `このフィールド${value.lable}は必須です`;
+        // value.messageError = `This field ${value.lable}  is required`;
       }
     },
   },
