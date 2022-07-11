@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="form-step2-ctn">
     <div v-for="siginAddres in siginAddress" :key="siginAddres.id">
       <title-vue>
         <template v-slot:title>
@@ -9,7 +9,9 @@
       <div v-for="data in siginAddres.forms" :key="data.id">
         <lable-vue>
           <template v-slot:required v-if="data.required">
-            <label class="lable-required">{{ data.required }}</label>
+            <label :class="{ lableRequired: data.required }">{{
+              data.required
+            }}</label>
           </template>
           <template v-slot:lableName>
             <label>{{ data.lable }}</label>
@@ -21,6 +23,7 @@
               :class="{ inputBlur: data.status }"
               @input="handleOnchanInput($event, data)"
               @blur="handleBlur(data)"
+              class="education-select"
             >
               <option
                 v-for="slecteducation in data.slecteducations"
@@ -132,7 +135,7 @@ export default {
   outline: none;
   border: 1px solid red;
 }
-.lable-required {
+/* .lable-required {
   background: red;
-}
+} */
 </style>

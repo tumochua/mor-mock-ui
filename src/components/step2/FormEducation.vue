@@ -1,5 +1,5 @@
 <template>
-  <div class="form-education">
+  <div class="form-step2-ctn">
     <div v-for="dataEducatiom in dataEducatioms" :key="dataEducatiom.id">
       <title-vue>
         <template v-slot:title>
@@ -21,7 +21,7 @@
               <label>{{ data.lable }}</label>
             </template>
             <template v-if="data.required" v-slot:required>
-              <label class="lable-default">
+              <label :class="{ lableRequired: data.required }">
                 {{ data.required }}
               </label>
             </template>
@@ -196,9 +196,8 @@ export default {
 
 <style scoped lang="scss">
 .form-education {
-  margin: 16px 0px;
-  background-color: #f1f2f7;
-  padding: 7px 0px 27px 23px;
+  // background-color: #f1f2f7;
+  // padding: 7px 0px 27px 23px;
 
   .education-title {
     color: #333333;
@@ -215,12 +214,6 @@ export default {
     color: #666666;
   }
   .lable-ctn {
-    .lable-default {
-      background-color: red;
-      padding: 2px 6px;
-      color: #ffffff;
-      border-radius: 2px;
-    }
   }
   .inputBlur {
     border: 1px solid red;

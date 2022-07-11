@@ -120,7 +120,6 @@ const state = {
                 value: "female",
                 placeholder: "テキストテキス",
               },
-              messageError: "",
               status: false,
               radios: [
                 {
@@ -137,18 +136,6 @@ const state = {
                 },
               ],
             },
-            // {
-            //   id: 8,
-            //   // lable: " 生年月日",
-            //   // required: "必須",
-            //   input: {
-            //     value: "male",
-            //     type: "radio",
-            //     placeholder: "テキストテキス",
-            //   },
-            //   messageError: "",
-            //   status: false,
-            // },
             {
               id: 8,
               lable: " 生年月日",
@@ -164,22 +151,22 @@ const state = {
             {
               id: 9,
               lable: "年齢",
-              input: {
-                value: "",
-                type: "text",
-                placeholder: "生年月日を入力すると表示されます",
-              },
+              // input: {
+              //   value: "",
+              //   type: "text",
+              //   placeholder: "生年月日を入力すると表示されます",
+              // },
               messageError: "",
               status: false,
             },
             {
               id: 10,
               lable: "ビジネスネーム",
-              input: {
-                value: "",
-                type: "text",
-                placeholder: "旧姓を利用する等の場合に入力をしてください。",
-              },
+              // input: {
+              //   value: "",
+              //   type: "text",
+              //   placeholder: "旧姓を利用する等の場合に入力をしてください。",
+              // },
               messageError: "",
               status: false,
             },
@@ -238,13 +225,12 @@ const state = {
                 placeholder: "テキストテキス",
               },
               slecteducations: [
-                { name: "	", id: 1 },
-                { name: "	東京大学 東京都 (	Đại học Tokyo)", id: 2 },
-                { name: "	東北大学 宮城県 (	Đại học Tohoku)", id: 3 },
-                { name: "	京都大学 京都府 (Đại học Kyoto)", id: 4 },
-                { name: "		東京工業大学 (	Đại học Nagoya)", id: 5 },
-                { name: "		九州大学 (		Viện Công nghệ Tokyo)", id: 6 },
-                { name: "		北海道大学 (		Đại học Osaka)", id: 7 },
+                { name: "	東京大学 東京都 (	Đại học Tokyo)", id: 1 },
+                { name: "	東北大学 宮城県 (	Đại học Tohoku)", id: 2 },
+                { name: "	京都大学 京都府 (Đại học Kyoto)", id: 3 },
+                { name: "		東京工業大学 (	Đại học Nagoya)", id: 4 },
+                { name: "		九州大学 (		Viện Công nghệ Tokyo)", id: 5 },
+                { name: "		北海道大学 (		Đại học Osaka)", id: 6 },
               ],
               messageError: "",
               status: false,

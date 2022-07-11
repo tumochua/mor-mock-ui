@@ -1,11 +1,7 @@
 <template>
   <div>
-    <div class="hader-step2">
-      <img
-        src="../../assets/Confirm/ArrowLeft.png"
-        class="hader-step2-icon"
-        @click="handleBack"
-      />
+    <div class="hader-step2" @click="handleBack">
+      <img src="../../assets/Confirm/ArrowLeft.png" class="hader-step2-icon" />
       <div>雇用契約に戻る</div>
     </div>
     <progress-bar-vue></progress-bar-vue>
@@ -41,7 +37,7 @@ export default {
   },
   methods: {
     handleBack() {
-      this.$store.dispatch("handleBack");
+      this.$store.dispatch("HANDLE_BACK_STEP");
     },
   },
 };
@@ -50,10 +46,10 @@ export default {
 <style scoped lang="scss">
 .hader-step2 {
   display: flex;
+  cursor: pointer;
   .hader-step2-icon {
     object-fit: contain;
     margin-right: 8px;
-    cursor: pointer;
   }
 }
 </style>

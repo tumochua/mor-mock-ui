@@ -1,5 +1,5 @@
 <template>
-  <div class="form-insuarance-ctn">
+  <div class="form-step2-ctn">
     <div v-for="formInsurance in formInsurances" :key="formInsurance.id">
       <title-vue>
         <template v-slot:title>
@@ -10,9 +10,15 @@
         <div class="form-insuarance-lable-ctn">
           <lable-vue>
             <template v-slot:required v-if="data.required">
-              <span class="lable-required">{{ data.required }}</span>
+              <span :class="{ lableRequired: data.required }">{{
+                data.required
+              }}</span>
             </template>
-            <template v-slot:lableName>{{ data.lable }}</template>
+            <template v-slot:lableName>
+              <label>
+                {{ data.lable }}
+              </label>
+            </template>
             <span>{{ data.default }}</span>
           </lable-vue>
         </div>
@@ -23,6 +29,7 @@
             :value="data.input.value"
             @input="handleOnchanInput($event, data)"
             @blur="handleBlur(data)"
+            class="input-text"
           />
         </input-text-vue>
         <input-file-vue v-if="data.input.type === 'file'">
@@ -106,19 +113,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.form-insuarance-ctn {
-  .form-insuarance-title {
-    margin-top: 16px;
-  }
-  .form-insuarance-lable-ctn {
-    margin-top: 24px;
-    margin-bottom: 8px;
-    .lable-required {
-      background-color: red;
-      padding: 2px 6px;
-      color: #ffffff;
-      border-radius: 2px;
-    }
-  }
+.form-insuarance-title {
+  margin-top: 16px;
+}
+.form-insuarance-lable-ctn {
+  margin-top: 24px;
+  margin-bottom: 8px;
+  // .lable-required {
+  //   background-color: red;
+  //   padding: 2px 6px;
+  //   color: #ffffff;
+  //   border-radius: 2px;
+  // }
 }
 </style>

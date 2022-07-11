@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="form-step2-ctn">
     <div class="formResident-check">
       <div>在留カード（外国籍の方はご記入ください</div>
       <label class="formResident-check-labe">
@@ -15,24 +15,16 @@
         <div v-for="data in formResident.forms" :key="data.id">
           <div class="form-resident-ctn">
             <div class="form-residen-lable">
-              <!-- <lable-vue v-if="data.required" class="form-resident-required">{{
-                data.required
-              }}</lable-vue>
-              <lable-vue>
-                <template>
-
-                </template>
-                {{ data.lable }}</lable-vue>
-              <lable-vue>{{ data.default }}</lable-vue> -->
               <lable-vue>
                 <template v-slot:lableName>
-                  <label>{{ data.lable }}</label>
+                  <!-- <label>{{ data.lable }}</label> -->
                 </template>
-                <template v-if="data.required" v-slot:required>
-                  <label class="lable-required">
+                <template v-slot:required v-if="data.required">
+                  <label :class="{ lableRequired: data.required }">
                     {{ data.required }}
                   </label>
                 </template>
+
                 <label>{{ data.default }}</label>
               </lable-vue>
             </div>
@@ -53,7 +45,7 @@
                 </input-text-vue>
               </div>
               <div v-if="data.input.type === 'select'">
-                <select>
+                <select class="education-select">
                   <option
                     v-for="slecteducation in data.slecteducations"
                     :key="slecteducation.id"
@@ -66,7 +58,7 @@
               <div v-if="data.input.type === 'date'">
                 <input-date-vue>
                   <template v-slot:inputDate>
-                    <input :type="data.input.type" />
+                    <input :type="data.input.type" class="input-date" />
                   </template>
                 </input-date-vue>
               </div>
@@ -181,7 +173,11 @@ export default {
     }
   }
 }
-.lable-required {
-  background-color: red;
-}
+// .lable-required {
+//   background-color: red;
+// }
+// .form-resident {
+//   background-color: #f1f2f7;
+//   padding: 7px 0px 27px 23px;
+// }
 </style>

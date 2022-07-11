@@ -32,10 +32,10 @@
     <div class="form-education">
       <form-education-vue></form-education-vue>
     </div>
-    <!-- <div class="form-insurance">
+    <div class="form-insurance">
       <form-insurance-vue></form-insurance-vue>
     </div>
-    <div class="form-salary">
+    <!-- <div class="form-salary">
       <form-salary-vue></form-salary-vue>
     </div>
     <div class="form-resident">
@@ -131,23 +131,6 @@ export default {
   .show-img {
     width: 100%;
     height: 100%;
-  }
-
-  .form-salary {
-    margin-top: 16px;
-    background-color: #f1f2f7;
-  }
-  .form-resident {
-    background-color: #f1f2f7;
-    margin: 20px 0px;
-  }
-  .form-sigin-address {
-    background-color: #f1f2f7;
-    margin: 20px 0px;
-  }
-  .form-insurance {
-    background-color: #f1f2f7;
-    padding: 7px 0px 27px 23px;
   }
 }
 </style>

@@ -54,6 +54,7 @@ export default {
     validateFormSigin() {
       const dataFormSigins = this.getDataForms[0].forms;
       return dataFormSigins.map((data) => {
+        console.log(!data.input.value);
         if (!data.input.value && data.required) {
           data.status = true;
           data.messageError = `このフィールド${data.lable}は必須です`;
@@ -185,35 +186,15 @@ export default {
       // }
 
       // console.log(this.nextStep);
-      this.nextStep.map((item) => {
-        return item.map((value) => {
-          // console.log("check value ", value);
-          // console.log("check messageError ", value.messageError === "");
-          // console.log(
-          //   "check messageError ",
-          //   value.messageError === "" && !value.required
-          // );
-
-          // console.log(value.required.length > 0);
-          if (!value.required) {
-            if (!value.required && !value.messageError) {
-              console.log("check messageError", !value.messageError);
-              console.log("không lỗi");
-              // this.$store.dispatch("HANLDE_NEXT");
-              return;
-            } else {
-              console.log("có lỗi");
-            }
-          }
+      this.nextStep.forEach((item) => {
+        let result = item.every((value) => {
+          return value.messageError === "";
         });
+
+        console.log("check result ", result);
       });
-      // console.log("check data ", this.nextStep);
 
       // this.$store.dispatch("HANLDE_NEXT");
-      // if (this.nextStep) {
-      // }
-      // if (this.nextStep) {
-      // }
     },
   },
 };

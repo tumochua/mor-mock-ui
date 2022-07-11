@@ -1,8 +1,6 @@
 <template>
   <div class="labale-ctn">
-    <span class="lable-default">
-      <slot name="required"> </slot>
-    </span>
+    <slot name="required"> </slot>
     <slot name="lableName"></slot>
     <slot></slot>
   </div>
