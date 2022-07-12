@@ -1,9 +1,8 @@
 <template>
   <div class="formStep1-ctn">
+    <!-- <progress-bar-vue></progress-bar-vue>
+    <date-vue></date-vue> -->
     <div class="formStep1">
-      <h2>{{ formStep1.title }}</h2>
-      <progress-bar-vue></progress-bar-vue>
-      <date-vue></date-vue>
       <confirm-vue>
         <template v-slot:title>
           <div class="confirm-title">
@@ -119,9 +118,18 @@
           </div>
         </div>
         <div class="confirm-checkbox">
-          <label class="confirm-checkbox-required">必須</label> <br />
-          <input type="checkbox" v-model="formStep1.confirmCheckBox" />
-          同意する場合はチェックをしてください
+          <label class="lableRequired">必須</label> <br />
+          <lable class="checkbox-item">
+            <input
+              type="checkbox"
+              v-model="confirmCheckBox"
+              class="checkbox-item-checkbox"
+            />
+            同意する場合はチェックをしてください
+          </lable>
+          <p v-if="errorCheckbox" class="errr-checkbox">
+            このフィールドは必須です
+          </p>
         </div>
       </div>
       <div class="contact-step1">
@@ -141,20 +149,21 @@
 </template>
 
 <script>
-import ProgressBarVue from "../ProgressBar.vue";
-import DateVue from "../slot/Date.vue";
 import ConfirmVue from "../slot/Confirm.vue";
+// import ProgressBarVue from "../ProgressBar.vue";
+// import DateVue from "../slot/Date.vue";
 export default {
   name: "FormStep",
   components: {
-    ProgressBarVue,
-    DateVue,
     ConfirmVue,
+    // ProgressBarVue,
+    // DateVue,
   },
   data() {
     return {
+      confirmCheckBox: false,
+      errorCheckbox: false,
       formStep1: {
-        confirmCheckBox: false,
         title: "雇用契約について",
         confirm: "ご確認ください",
         description:
@@ -326,9 +335,12 @@ export default {
   },
   methods: {
     handleNext() {
-      console.log("checK : ", this.formStep1.confirmCheckBox);
-      if (this.formStep1.confirmCheckBox) {
+      console.log("checK : ", this.confirmCheckBox);
+      if (this.confirmCheckBox) {
         this.$store.dispatch("HANLDE_NEXT");
+        this.errorCheckbox = false;
+      } else {
+        this.errorCheckbox = true;
       }
     },
   },
@@ -420,9 +432,20 @@ export default {
     }
     .confirm-checkbox {
       margin-top: 20px;
+      .checkbox-item {
+        display: flex;
+      }
+      .checkbox-item-checkbox {
+        margin-right: 10px;
+      }
+      .errr-checkbox {
+        color: red;
+      }
     }
     .contact-step1 {
       display: flex;
+      background-color: #f1f2f7;
+      margin: 16px 0px;
       .contact-step1-icon {
         object-fit: contain;
       }

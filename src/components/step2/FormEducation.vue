@@ -81,15 +81,13 @@
                     v-model="searchQuery"
                   />
                 </template>
-                <!-- <input v-model="searchQuery" /> -->
-                <!-- <div>
-                  <div
-                    v-for="resultQuer in resultQuery"
-                    :key="resultQuer.id"
-                  >
-                    {{ resultQuer.title }}
+                <div v-if="inputSeach">
+                  <div v-for="resultQuer in resultQuery" :key="resultQuer.id">
+                    <span @click="handleClickSeach">{{
+                      resultQuer.title
+                    }}</span>
                   </div>
-                </div> -->
+                </div>
               </input-text-vue>
             </div>
           </div>
@@ -147,6 +145,7 @@ export default {
       // dataEducatioms: this.formEducations,
       inputSigin: [],
       searchQuery: "",
+      inputSeach: false,
     };
   },
   props: {
@@ -180,7 +179,7 @@ export default {
   },
   methods: {
     handleOnchanInput(event, form) {
-      console.log(event.target.value);
+      this.inputSeach = true;
       form.status = false;
       form.messageError = "";
       const result = {
@@ -192,6 +191,7 @@ export default {
       // this.$emit("handleOnchanInput", this.inputSigin);
     },
     handleBlur(value) {
+      this.inputSeach = false;
       console.log("check bluer", value);
       if (!value.input.value.trim() && value.required) {
         value.status = true;
@@ -213,6 +213,9 @@ export default {
         status: false,
       });
     },
+    // handleClickSeach() {
+    //   Math.round(Math.random(6 * 100));
+    // },
   },
 
   watch: {

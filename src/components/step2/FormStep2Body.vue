@@ -33,7 +33,7 @@
       <div class="form-sigin-infomation">
         <form-sign-information-vue></form-sign-information-vue>
       </div>
-      <!-- <div class="form-education">
+      <div class="form-education">
         <form-education-vue></form-education-vue>
       </div>
       <div class="form-insurance">
@@ -47,7 +47,7 @@
       </div>
       <div class="form-sigin-address">
         <form-sigin-address></form-sigin-address>
-      </div> -->
+      </div>
     </form>
   </div>
 </template>
@@ -56,7 +56,7 @@
 import InputFileVue from "../slot/InputFile.vue";
 
 import FormSignInformationVue from "./FormSignInformation.vue";
-// import FormEducationVue from "./FormEducation.vue";
+import FormEducationVue from "./FormEducation.vue";
 // import FormInsuranceVue from "./FormInsurance.vue";
 // import FormSalaryVue from "./FormSalary.vue";
 // import FormResidentVue from "./FormResident.vue";
@@ -67,7 +67,7 @@ export default {
   components: {
     InputFileVue,
     FormSignInformationVue,
-    // FormEducationVue,
+    FormEducationVue,
     // FormInsuranceVue,
     // FormSalaryVue,
     // FormResidentVue,
@@ -132,6 +132,21 @@ export default {
   .show-img {
     width: 100%;
     height: 100%;
+  }
+  .form-salary {
+    margin-top: 16px;
+    background-color: #f1f2f7;
+  }
+  .form-resident {
+    background-color: #f1f2f7;
+    margin: 20px 0px;
+  }
+  .form-sigin-address {
+    background-color: #f1f2f7;
+    margin: 20px 0px;
+  }
+  .form-insurance {
+    background-color: #f1f2f7;
   }
 }
 </style>

@@ -125,15 +125,15 @@ export default {
   methods: {
     handleNextStep() {
       const sigin = this.validateFormSigin;
-      // const education = this.validateFormEducation;
-      // const insurance = this.validateFormInsurance;
-      // const salary = this.validateFormSalary;
-      // const siginAddress = this.validateFormSiginAddress;
+      const education = this.validateFormEducation;
+      const insurance = this.validateFormInsurance;
+      const salary = this.validateFormSalary;
+      const siginAddress = this.validateFormSiginAddress;
       this.nextStep.push(sigin);
-      // this.nextStep.push(education);
-      // this.nextStep.push(insurance);
-      // this.nextStep.push(salary);
-      // this.nextStep.push(siginAddress);
+      this.nextStep.push(education);
+      this.nextStep.push(insurance);
+      this.nextStep.push(salary);
+      this.nextStep.push(siginAddress);
       let result = this.handleNextStepComputed.every((value) => {
         return value.messageError === "";
       });
