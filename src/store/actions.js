@@ -8,6 +8,9 @@ const actions = {
   HANDLE_ADD_EDUCATION({ commit }, payload) {
     commit("HANDLE_ADD_EDUCATION", payload);
   },
+  HANDLE_RESET({ commit }) {
+    commit("HANDLE_RESET");
+  },
 };
 
 export default actions;

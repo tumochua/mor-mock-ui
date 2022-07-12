@@ -1,7 +1,6 @@
 <template>
   <div class="formStep1-ctn">
-    <!-- <progress-bar-vue></progress-bar-vue>
-    <date-vue></date-vue> -->
+    <date-vue></date-vue>
     <div class="formStep1">
       <confirm-vue>
         <template v-slot:title>
@@ -151,13 +150,13 @@
 <script>
 import ConfirmVue from "../slot/Confirm.vue";
 // import ProgressBarVue from "../ProgressBar.vue";
-// import DateVue from "../slot/Date.vue";
+import DateVue from "../slot/Date.vue";
 export default {
   name: "FormStep",
   components: {
     ConfirmVue,
     // ProgressBarVue,
-    // DateVue,
+    DateVue,
   },
   data() {
     return {
@@ -454,6 +453,11 @@ export default {
   .btn-next {
     width: 100%;
     cursor: pointer;
+    padding: 12px 10px;
+    background-color: #b2b1ff;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
   }
 }
 </style>

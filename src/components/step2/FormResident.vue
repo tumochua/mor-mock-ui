@@ -149,7 +149,6 @@ export default {
       // this.$emit("handleOnchanInput", this.inputSigin);
     },
     handleBlur(value) {
-      console.log("check bluer", value);
       if (!value.input.value.trim() && value.required) {
         value.status = true;
         // value.messageError = `This field  is required`;

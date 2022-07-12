@@ -8,21 +8,12 @@
       </div>
       <form-step-vue v-if="currentPage === 1"> </form-step-vue>
       <step2-form-vue v-if="currentPage === 2">
-        <!-- <progress-bar-vue></progress-bar-vue>
-        <date-vue></date-vue> -->
+        <DateVue />
       </step2-form-vue>
-      <step2-form-vue v-if="currentPage === 3">
-        <!-- <progress-bar-vue></progress-bar-vue>
-        <date-vue></date-vue> -->
-      </step2-form-vue>
+      <step2-form-vue v-if="currentPage === 3"> <DateVue /> </step2-form-vue>
       <form-step3-vue v-if="currentPage === 4">
-        <!-- <progress-bar-vue></progress-bar-vue>
-        <date-vue></date-vue> -->
+        <DateVue />
       </form-step3-vue>
-      <form-step4-vue v-if="currentPage === 5">
-        <!-- <progress-bar-vue></progress-bar-vue>
-        <date-vue></date-vue> -->
-      </form-step4-vue>
     </div>
   </div>
 </template>
@@ -33,9 +24,7 @@ import HeaderVue from "./components/Header.vue";
 import FormStepVue from "./components/step1/FormStep.vue";
 import Step2FormVue from "./components/step2/Step2Form.vue";
 import FormStep3Vue from "./components/step3/FormStep3.vue";
-import FormStep4Vue from "./components/step4/FormStep4.vue";
-// import ProgressBarVue from "./components/ProgressBar.vue";
-// import DateVue from "./components/slot/Date.vue";
+import DateVue from "./components/slot/Date.vue";
 import ProgressBarsVue from "./components/ProgressBars.vue";
 import { mapState } from "vuex";
 export default {
@@ -45,10 +34,8 @@ export default {
     FormStepVue,
     Step2FormVue,
     FormStep3Vue,
-    FormStep4Vue,
     ProgressBarsVue,
-    // ProgressBarVue,
-    // DateVue,
+    DateVue,
     // ButtonVue,
   },
   data() {

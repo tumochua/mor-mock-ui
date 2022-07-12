@@ -1,12 +1,17 @@
 <template>
   <div class="form4-ctn">
-    <h2>入社手続きの申請ありがとうございました。</h2>
+    <h2 class="">入社手続きの申請ありがとうございました。</h2>
     <img src="../../assets/form4/icon-email.png" class="form4-icon" />
     <div class="form4-des">
       申請がありがとうございました。<br />
       入社手続きの承認をお待ちください。
     </div>
-    <con-firm-step v-if="showhideModel" @handleClone="handleClone">
+    <con-firm-step
+      v-if="showhideModel"
+      @handleClone="handleClone"
+      @handleApplication="handleClone"
+      @handleReset="handleReset"
+    >
     </con-firm-step>
     <!-- <confirm-vue v-if="showhideModel" @handleClone="handleClone"></confirm-vue> -->
     <button class="form4-btn" @click="handleConFirm">申請した内容を見る</button>
@@ -31,6 +36,10 @@ export default {
     },
     handleClone() {
       this.showhideModel = false;
+    },
+    handleReset() {
+      this.showhideModel = false;
+      this.$store.dispatch("HANDLE_RESET");
     },
   },
 };

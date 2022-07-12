@@ -4,7 +4,7 @@
     <form-step2-body-vue
       @handleOnchanInput="handleOnchanInput"
     ></form-step2-body-vue>
-    <button @click="handleNextStep">Next Step</button>
+    <button @click="handleNextStep" class="btn-next">Next Step</button>
   </div>
 </template>
 
@@ -135,6 +135,7 @@ export default {
       this.nextStep.push(salary);
       this.nextStep.push(siginAddress);
       let result = this.handleNextStepComputed.every((value) => {
+        console.log(value.messageError);
         return value.messageError === "";
       });
       console.log("check result", result);
@@ -146,4 +147,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.btn-next {
+  width: 100%;
+  cursor: pointer;
+  padding: 12px 10px;
+  background-color: #b2b1ff;
+  border: none;
+  border-radius: 4px;
+  color: #ffffff;
+}
+</style>
