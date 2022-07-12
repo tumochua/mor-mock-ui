@@ -1,6 +1,6 @@
 // import date from '../../src/assets/date.png'
 const state = {
-  currentPage: 2,
+  currentPage: 1,
   forms: [],
   ProgressBar: [
     {
