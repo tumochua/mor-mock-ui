@@ -15,19 +15,24 @@
         </template>
       </description-vue>
       <div v-for="form in siginInformation.forms" :key="form.id">
+        <!-- {{ form.input }} -->
         <div class="sign-information-conten">
           <lable-vue>
             <template v-slot:lableName>
               <lable>{{ form.lable }}</lable>
             </template>
             <template v-slot:required v-if="form.required">
-              <lable class="lable-default">{{ form.required }}</lable>
+              <lable :class="{ lableRequired: form.required }">{{
+                form.required
+              }}</lable>
             </template>
           </lable-vue>
           <input-text-vue>
-            <template v-slot:inputText>
+            <template
+              v-slot:inputText
+              v-if="form.input && form.input.type === 'text' && form.required"
+            >
               <input
-                v-if="form.input.type === 'text' && form.required"
                 :class="{ inputBlur: form.status }"
                 class="input-text"
                 :type="form.input.type"
@@ -37,16 +42,14 @@
                 @blur="handleBlur(form)"
               />
             </template>
-            <span v-if="!form.required">
-              <input class="input-text" />
+            <span v-if="form.input && !form.required">
+              <input
+                class="input-text"
+                @input="handleOnchanInput($event, form)"
+              />
             </span>
-            <error-message-vue>
-              <template v-if="form.status" v-slot:errors>
-                <p v-if="form.status">{{ form.messageError }}</p>
-              </template>
-            </error-message-vue>
           </input-text-vue>
-          <input-radio-vue v-if="form.input.type === 'radio'">
+          <input-radio-vue v-if="form.input && form.input.type === 'radio'">
             <template v-slot:radio>
               <div class="radio-ctn">
                 <div v-for="radio in form.radios" :key="radio.id">
@@ -54,19 +57,16 @@
                     <input
                       :type="radio.type"
                       :class="{ inputBlur: form.status }"
+                      :value="radio.value"
+                      v-model="inputRadio"
                     />
                     <label class="radio-lable">{{ radio.lable }}</label>
                   </div>
                 </div>
               </div>
             </template>
-            <error-message-vue>
-              <template v-if="form.status" v-slot:errors>
-                <p v-if="form.status">{{ form.messageError }}</p>
-              </template>
-            </error-message-vue>
           </input-radio-vue>
-          <input-date-vue v-if="form.input.type === 'date'">
+          <input-date-vue v-if="form.input && form.input.type === 'date'">
             <template v-slot:inputDate>
               <input
                 :class="{ inputBlur: form.status }"
@@ -77,13 +77,13 @@
                 @blur="handleBlur(form)"
               />
             </template>
-            <error-message-vue>
-              <template v-if="form.status" v-slot:errors>
-                <p v-if="form.status">{{ form.messageError }}</p>
-              </template>
-            </error-message-vue>
           </input-date-vue>
         </div>
+        <error-message-vue>
+          <template v-if="form.status" v-slot:errors>
+            <p v-if="form.status">{{ form.messageError }}</p>
+          </template>
+        </error-message-vue>
       </div>
     </div>
   </div>
@@ -114,6 +114,7 @@ export default {
     return {
       // siginInformations: this.siginInformations,
       inputSigin: [],
+      inputRadio: "female",
     };
   },
   created() {
@@ -141,10 +142,12 @@ export default {
       // this.$emit("handleOnchanInput", this.inputSigin);
     },
     handleBlur(value) {
+      console.log(value);
       if (!value.input.value.trim()) {
         value.status = true;
         // value.messageError = `This field  is required`;
-        value.messageError = `This field ${value.lable}  is required`;
+        value.messageError = `このフィールド${value.lable}は必須です`;
+        // value.messageError = `This field ${value.lable}  is required`;
       }
     },
   },
@@ -154,9 +157,9 @@ export default {
 <style scoped lang="scss">
 .sign-information-ctn {
   background-color: #f1f2f7;
+  padding: 7px 0px 27px 23px;
   margin-top: 168px;
   margin-bottom: 100px;
-  padding: 7px 0px 27px 23px;
   .sign-information-conten {
     margin-top: 20px;
     .input-text {
@@ -171,12 +174,6 @@ export default {
       outline: none;
     }
 
-    .lable-default {
-      background-color: red;
-      padding: 2px 6px;
-      color: #ffffff;
-      border-radius: 2px;
-    }
     .input-date {
       margin-top: 8px;
       margin-bottom: 24px;

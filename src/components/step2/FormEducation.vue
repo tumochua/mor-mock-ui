@@ -1,5 +1,9 @@
 <template>
-  <div class="form-education">
+  <div class="form-step2-ctn">
+    <!-- <div v-for="resultQuer in resultQuery" :key="resultQuer.id">
+      <div>{{ resultQuer.title }}</div>
+    </div>
+    <input v-model="searchQuery" /> -->
     <div v-for="dataEducatiom in dataEducatioms" :key="dataEducatiom.id">
       <title-vue>
         <template v-slot:title>
@@ -21,7 +25,7 @@
               <label>{{ data.lable }}</label>
             </template>
             <template v-if="data.required" v-slot:required>
-              <label class="lable-default">
+              <label :class="{ lableRequired: data.required }">
                 {{ data.required }}
               </label>
             </template>
@@ -39,17 +43,16 @@
                   @input="handleOnchanInput($event, data)"
                   @blur="handleBlur(data)"
                 />
-                <error-message-vue>
-                  <template v-if="data.status" v-slot:errors>
-                    <p v-if="data.status">{{ data.messageError }}</p>
-                  </template>
-                </error-message-vue>
-                <!-- <input :type="data.input.type" class="input-date-ctn" /> -->
               </template>
             </input-date-vue>
           </div>
           <div v-if="data.input.type === 'select'">
-            <select class="education-select">
+            <select
+              class="education-select"
+              :class="{ inputBlur: data.status }"
+              @input="handleOnchanInput($event, data)"
+              @blur="handleBlur(data)"
+            >
               <option
                 v-for="slecteducation in data.slecteducations"
                 :key="slecteducation.id"
@@ -67,22 +70,51 @@
                   alt="icon seach"
                 />
               </span>
-              <input class="input-text" :placeholder="data.input.placeholder" />
+              <input-text-vue>
+                <template v-slot:inputText>
+                  <input
+                    class="input-text"
+                    :class="{ inputBlur: data.status }"
+                    :placeholder="data.input.placeholder"
+                    @input="handleOnchanInput($event, data)"
+                    @blur="handleBlur(data)"
+                    v-model="searchQuery"
+                  />
+                </template>
+                <!-- <input v-model="searchQuery" /> -->
+                <!-- <div>
+                  <div
+                    v-for="resultQuer in resultQuery"
+                    :key="resultQuer.id"
+                  >
+                    {{ resultQuer.title }}
+                  </div>
+                </div> -->
+              </input-text-vue>
             </div>
           </div>
           <div v-if="data.input.type === 'text'">
-            <input
-              class="input-text"
-              :placeholder="data.input.placeholder"
-              :value="data.input.value"
-              @input="handleOnchanInput($event, data)"
-            />
+            <input-text-vue>
+              <template v-slot:inputText>
+                <input
+                  class="input-text"
+                  :placeholder="data.input.placeholder"
+                  :value="data.input.value"
+                  @input="handleOnchanInput($event, data)"
+                />
+              </template>
+            </input-text-vue>
           </div>
         </div>
+        <error-message-vue>
+          <template v-if="data.status && data.required" v-slot:errors>
+            <p v-if="data.status">{{ data.messageError }}</p>
+          </template>
+        </error-message-vue>
       </div>
-      <div class="add-education">
+      <div class="add-education" @click="handleAddEducation">
         <img src="../../assets/education/add-education.png" class="icon-add" />
-        <span class="add-education-text">学歴を追加する</span>
+        <span class="add-education-text">学歴を追加する </span>
       </div>
     </div>
     <div></div>
@@ -93,9 +125,10 @@
 import TitleVue from "../slot/Title.vue";
 import DescriptionVue from "../slot/Description.vue";
 import InputDateVue from "../slot/InputDate.vue";
+import InputTextVue from "../slot/InputText.vue";
 import LableVue from "../slot/Lable.vue";
 import ErrorMessageVue from "../slot/ErrorMessage.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "FormEducation",
   inject: ["formEducations"],
@@ -103,6 +136,7 @@ export default {
     TitleVue,
     DescriptionVue,
     InputDateVue,
+    InputTextVue,
     LableVue,
     ErrorMessageVue,
   },
@@ -111,6 +145,8 @@ export default {
     return {
       // mesData: this.msg,
       // dataEducatioms: this.formEducations,
+      inputSigin: [],
+      searchQuery: "",
     };
   },
   props: {
@@ -125,9 +161,18 @@ export default {
   },
 
   computed: {
-    // ...mapState({
-    //   dataEducatioms: (state) => state.formLists[0].formEducation,
-    // }),
+    ...mapState({
+      resources: (state) => state.resources,
+    }),
+    resultQuery() {
+      if (this.searchQuery) {
+        return this.resources.filter((item) => {
+          return item.title.startsWith(this.searchQuery);
+        });
+      } else {
+        return this.resources;
+      }
+    },
     ...mapGetters(["getEducatioms"]),
     dataEducatioms() {
       return this.getEducatioms.flat(1);
@@ -135,6 +180,7 @@ export default {
   },
   methods: {
     handleOnchanInput(event, form) {
+      console.log(event.target.value);
       form.status = false;
       form.messageError = "";
       const result = {
@@ -147,11 +193,25 @@ export default {
     },
     handleBlur(value) {
       console.log("check bluer", value);
-      if (!value.input.value.trim()) {
+      if (!value.input.value.trim() && value.required) {
         value.status = true;
         // value.messageError = `This field  is required`;
-        value.messageError = `This field ${value.lable}  is required`;
+        value.messageError = `このフィールド${value.lable}は必須です`;
       }
+    },
+    handleAddEducation() {
+      this.$store.dispatch("HANDLE_ADD_EDUCATION", {
+        id: 1,
+        lable: " 入学年月日",
+        required: "必須",
+        input: {
+          value: "",
+          type: "date",
+          placeholder: "テキストテキス",
+        },
+        messageError: "",
+        status: false,
+      });
     },
   },
 
@@ -174,9 +234,8 @@ export default {
 
 <style scoped lang="scss">
 .form-education {
-  margin: 16px 0px;
-  background-color: #f1f2f7;
-  padding: 7px 0px 27px 23px;
+  // background-color: #f1f2f7;
+  // padding: 7px 0px 27px 23px;
 
   .education-title {
     color: #333333;
@@ -193,12 +252,6 @@ export default {
     color: #666666;
   }
   .lable-ctn {
-    .lable-default {
-      background-color: red;
-      padding: 2px 6px;
-      color: #ffffff;
-      border-radius: 2px;
-    }
   }
   .inputBlur {
     border: 1px solid red;
@@ -210,11 +263,20 @@ export default {
     border-radius: 4px;
     border: 1px solid #dcdcdc;
   }
+  .inputBlur {
+    border: 1px solid red;
+    outline: none;
+  }
   .education-select {
     width: 95%;
     padding: 12px;
     border-radius: 4px;
     border: 1px solid #dcdcdc;
+    outline: none;
+  }
+  .inputBlur {
+    border: 1px solid red;
+    outline: none;
   }
   .input-text {
     padding: 12px;
@@ -228,11 +290,16 @@ export default {
     .education-icon-seach {
       position: absolute;
       right: 10%;
-      top: 20%;
+      top: 13%;
+    }
+    .inputBlur {
+      border: 1px solid red;
+      outline: none;
     }
   }
   .add-education {
     margin-top: 12px;
+    cursor: pointer;
     .icon-add {
     }
     .add-education-text {

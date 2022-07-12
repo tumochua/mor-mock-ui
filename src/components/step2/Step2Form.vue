@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- <div>{{ getDataForms }}</div> -->
-    <!-- <div v-for="data in dataForm" :key="data">{{ data }}</div> -->
     <header-step-2></header-step-2>
     <form-step2-body-vue
       @handleOnchanInput="handleOnchanInput"
@@ -13,7 +11,6 @@
 <script>
 import HeaderStep2 from "./HeaderStep2.vue";
 import FormStep2BodyVue from "./FormStep2Body.vue";
-// import { mapGetters } from "vuex";
 import { mapGetters, mapState } from "vuex";
 export default {
   components: {
@@ -24,6 +21,8 @@ export default {
     return {
       siginInfor: [],
       education: [],
+      nextStep: [],
+      messageErrors: "",
     };
   },
   props: {
@@ -52,42 +51,96 @@ export default {
     ...mapState({
       getDataForms: (state) => state.formLists[0].form2,
     }),
-
-    // siginInformations() {
-    //   return this.getSiginInformations.flat(1);
-    // },
-    // validateSigin() {
-    //   return this.siginInformations.map((data) => {
-    //     return (this.siginInfor = data.forms);
-    //   });
-    // },
-  },
-  created() {},
-  methods: {
+    handleNextStepComputed() {
+      return this.nextStep.flat(1);
+    },
     validateFormSigin() {
       const dataFormSigins = this.getDataForms[0].forms;
       return dataFormSigins.map((data) => {
-        // console.log("check data", data);
-        if (!data.input.value && data.required) {
+        if (data.input && data.required && !data.input.value) {
           data.status = true;
-          data.messageError = `This field ${data.lable}  is required`;
+          data.messageError = `このフィールド${data.lable}は必須です`;
         }
-        return data.status;
+        return data;
       });
     },
     validateFormEducation() {
       const dataFormEducation = this.getDataForms[1].forms;
       return dataFormEducation.map((data) => {
-        if (!data.input.value && data.required) {
+        // console.log("check data validateFormEducation", data.input);
+
+        if (data.input && data.required && !data.input.value) {
           data.status = true;
-          data.messageError = `This field ${data.lable}  is required`;
+          data.messageError = `このフィールド${data.lable}は必須です`;
         }
-        return data.status;
+        return data;
       });
     },
+    validateFormInsurance() {
+      const dataFormInsuarance = this.getDataForms[2].forms;
+
+      return dataFormInsuarance.map((data) => {
+        if (data.input && data.required && !data.input.value) {
+          data.status = true;
+          data.messageError = `このフィールド${data.lable}は必須です`;
+        }
+        return data;
+      });
+    },
+    validateFormSalary() {
+      const dataFormSalary = this.getDataForms[3].forms;
+
+      return dataFormSalary.map((data) => {
+        if (data.input && data.required && !data.input.value) {
+          data.status = true;
+          data.messageError = `このフィールド${data.lable}は必須です`;
+        }
+        return data;
+      });
+    },
+    validateFormSiginAddress() {
+      const dataFormSiginAddress = this.getDataForms[5].forms;
+
+      return dataFormSiginAddress.map((data) => {
+        if (data.input && data.required && !data.input.value) {
+          data.status = true;
+          data.messageError = `このフィールド${data.lable}は必須です`;
+        }
+        return data;
+      });
+    },
+    // validateFormResident() {
+    //   const dataFormResident = this.getDataForms[4].forms;
+    //   return dataFormResident.map((data) => {
+    //     // console.log("check validateFormResident", data.input && data.input.value);
+    //     if (data.input && data.input.value) {
+    //       data.status = true;
+    //       data.messageError = `このフィールド${data.lable}は必須です`;
+    //     }
+    //     return data;
+    //   });
+    // },
+  },
+  created() {},
+  methods: {
     handleNextStep() {
-      this.validateFormSigin();
-      this.validateFormEducation();
+      const sigin = this.validateFormSigin;
+      // const education = this.validateFormEducation;
+      // const insurance = this.validateFormInsurance;
+      // const salary = this.validateFormSalary;
+      // const siginAddress = this.validateFormSiginAddress;
+      this.nextStep.push(sigin);
+      // this.nextStep.push(education);
+      // this.nextStep.push(insurance);
+      // this.nextStep.push(salary);
+      // this.nextStep.push(siginAddress);
+      let result = this.handleNextStepComputed.every((value) => {
+        return value.messageError === "";
+      });
+      console.log("check result", result);
+      if (result) {
+        this.$store.dispatch("HANLDE_NEXT");
+      }
     },
   },
 };

@@ -328,7 +328,7 @@ export default {
     handleNext() {
       console.log("checK : ", this.formStep1.confirmCheckBox);
       if (this.formStep1.confirmCheckBox) {
-        this.$store.dispatch("handleNext");
+        this.$store.dispatch("HANLDE_NEXT");
       }
     },
   },
