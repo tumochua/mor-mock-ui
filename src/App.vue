@@ -14,8 +14,9 @@
         @handleOnchanInput="handleOnchanInput"
         ref="step2"
       ></step2-form-vue>
-      <form-step3-vue v-if="currentPage === 3"></form-step3-vue>
-      <form-step4-vue v-if="currentPage === 4"></form-step4-vue>
+      <step2-form-vue v-if="currentPage === 3"></step2-form-vue>
+      <form-step3-vue v-if="currentPage === 4"></form-step3-vue>
+      <form-step4-vue v-if="currentPage === 5"></form-step4-vue>
     </div>
   </div>
 </template>

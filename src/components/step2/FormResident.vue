@@ -1,5 +1,6 @@
 <template>
   <div class="form-step2-ctn">
+    {{formResidents[0].forms[0].input.value}}
     <div class="formResident-check">
       <div>在留カード（外国籍の方はご記入ください</div>
       <label class="formResident-check-labe">
@@ -20,7 +21,13 @@
                   <!-- <label>{{ data.lable }}</label> -->
                 </template>
                 <template v-slot:required v-if="data.required">
-                  <label :class="{ lableRequired: data.required }">
+                  <label
+                    :class="[
+                      formResidents[0].forms[0].input.value
+                        ? 'lableRequired'
+                        : 'disabled',
+                    ]"
+                  >
                     {{ data.required }}
                   </label>
                 </template>
@@ -108,7 +115,7 @@ export default {
   data() {
     return {
       // formResidents: this.formResidents,
-      checkboxResident: false,
+      checkboxResident: true,
       inputSigin: [],
     };
   },
@@ -170,12 +177,16 @@ export default {
     }
     .form-residen-lable {
       display: flex;
+      .disabled {
+        background: gray;
+        padding: 2px 6px;
+        color: #ffffff;
+        border-radius: 2px;
+      }
     }
   }
 }
-// .lable-required {
-//   background-color: red;
-// }
+
 // .form-resident {
 //   background-color: #f1f2f7;
 //   padding: 7px 0px 27px 23px;

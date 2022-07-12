@@ -51,11 +51,13 @@ export default {
     ...mapState({
       getDataForms: (state) => state.formLists[0].form2,
     }),
+    handleNextStepComputed() {
+      return this.nextStep.flat(1);
+    },
     validateFormSigin() {
       const dataFormSigins = this.getDataForms[0].forms;
       return dataFormSigins.map((data) => {
-        console.log(!data.input.value);
-        if (!data.input.value && data.required) {
+        if (data.input && data.required && !data.input.value) {
           data.status = true;
           data.messageError = `このフィールド${data.lable}は必須です`;
         }
@@ -67,134 +69,78 @@ export default {
       return dataFormEducation.map((data) => {
         // console.log("check data validateFormEducation", data.input);
 
-        if (!data.input.value && data.required) {
+        if (data.input && data.required && !data.input.value) {
           data.status = true;
           data.messageError = `このフィールド${data.lable}は必須です`;
         }
         return data;
       });
     },
-    // validateFormInsurance() {
-    //   const dataFormInsuarance = this.getDataForms[2].forms;
+    validateFormInsurance() {
+      const dataFormInsuarance = this.getDataForms[2].forms;
 
-    //   return dataFormInsuarance.map((data) => {
-    //     if (!data.input.value && data.required) {
-    //       data.status = true;
-    //       data.messageError = `このフィールド${data.lable}は必須です`;
-    //     }
-    //     return data;
-    //   });
-    // },
-    // validateFormSalary() {
-    //   const dataFormSalary = this.getDataForms[3].forms;
+      return dataFormInsuarance.map((data) => {
+        if (data.input && data.required && !data.input.value) {
+          data.status = true;
+          data.messageError = `このフィールド${data.lable}は必須です`;
+        }
+        return data;
+      });
+    },
+    validateFormSalary() {
+      const dataFormSalary = this.getDataForms[3].forms;
 
-    //   return dataFormSalary.map((data) => {
-    //     if (!data.input.value && data.required) {
-    //       data.status = true;
-    //       data.messageError = `このフィールド${data.lable}は必須です`;
-    //     }
-    //     return data;
-    //   });
-    // },
+      return dataFormSalary.map((data) => {
+        if (data.input && data.required && !data.input.value) {
+          data.status = true;
+          data.messageError = `このフィールド${data.lable}は必須です`;
+        }
+        return data;
+      });
+    },
+    validateFormSiginAddress() {
+      const dataFormSiginAddress = this.getDataForms[5].forms;
+
+      return dataFormSiginAddress.map((data) => {
+        if (data.input && data.required && !data.input.value) {
+          data.status = true;
+          data.messageError = `このフィールド${data.lable}は必須です`;
+        }
+        return data;
+      });
+    },
     // validateFormResident() {
     //   const dataFormResident = this.getDataForms[4].forms;
     //   return dataFormResident.map((data) => {
-    //     // console.log("check validateFormResident", data.input.value);
-    //     if (data.input.value) {
+    //     // console.log("check validateFormResident", data.input && data.input.value);
+    //     if (data.input && data.input.value) {
     //       data.status = true;
     //       data.messageError = `このフィールド${data.lable}は必須です`;
     //     }
     //     return data;
     //   });
-    // },
-    // validateFormSiginAddress() {
-    //   const dataFormSiginAddress = this.getDataForms[5].forms;
-
-    //   return dataFormSiginAddress.map((data) => {
-    //     if (!data.input.value && data.required) {
-    //       data.status = true;
-    //       data.messageError = `このフィールド${data.lable}は必須です`;
-    //     }
-    //     return data;
-    //   });
-    // },
-    // handleNext() {
-    //   return  const sigin = this.validateFormSigin();
-    //     const education = this.validateFormEducation();
-    //     const insurance = this.validateFormInsurance();
-    //     const salary = this.validateFormSalary();
-    //     const resident = this.validateFormResident();
-    //     const siginAddress = this.validateFormSiginAddress();
-    //     this.nextStep.push(sigin);
-    //     this.nextStep.push(education);
-    //     this.nextStep.push(insurance);
-    //     this.nextStep.push(salary);
-    //     this.nextStep.push(resident);
-    //     this.nextStep.push(siginAddress);
-
     // },
   },
   created() {},
   methods: {
     handleNextStep() {
       const sigin = this.validateFormSigin;
-      const education = this.validateFormEducation;
+      // const education = this.validateFormEducation;
       // const insurance = this.validateFormInsurance;
       // const salary = this.validateFormSalary;
-      // const resident = this.validateFormResident;
       // const siginAddress = this.validateFormSiginAddress;
-
       this.nextStep.push(sigin);
-      this.nextStep.push(education);
+      // this.nextStep.push(education);
       // this.nextStep.push(insurance);
       // this.nextStep.push(salary);
-      // this.nextStep.push(resident);
       // this.nextStep.push(siginAddress);
-
-      // this.validateFormSigin();
-      // this.validateFormEducation();
-      // this.validateFormInsurance();
-      // this.validateFormInsurance();
-      // this.validateFormSalary();
-      // this.validateFormResident();
-      // this.validateFormSiginAddress();
-      // this.$store.dispatch("HANLDE_NEXT");
-
-      // console.log("check this.validateFormSigin()", sigin);
-      // console.log("check this.validateFormEducation()", education);
-      // this.validateFormSigin();
-      // this.validateFormEducation();
-
-      // if (sigin) {
-      //   this.nextStep.push(sigin);
-      // }
-      // if (education) {
-      //   this.nextStep.push(education);
-      // }
-      // if (insurance) {
-      //   this.nextStep.push(insurance);
-      // }
-      // if (salary) {
-      //   this.nextStep.push(salary);
-      // }
-      // if (resident) {
-      //   this.nextStep.push(resident);
-      // }
-
-      // if (siginAddress) {
-      //   this.nextStep.push(siginAddress);
-      // }
-
-      // console.log(this.nextStep);
-      this.nextStep.forEach((item) => {
-        let result = item.every((value) => {
-          return value.messageError === "";
-        });
-
-        console.log("check result ", result);
+      let result = this.handleNextStepComputed.every((value) => {
+        return value.messageError === "";
       });
-
-      // this.$store.dispatch("HANLDE_NEXT");
+      console.log("check result", result);
+      if (result) {
+        this.$store.dispatch("HANLDE_NEXT");
+      }
     },
   },
 };

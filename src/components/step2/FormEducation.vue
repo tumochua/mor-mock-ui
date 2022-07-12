@@ -1,5 +1,9 @@
 <template>
   <div class="form-step2-ctn">
+    <!-- <div v-for="resultQuer in resultQuery" :key="resultQuer.id">
+      <div>{{ resultQuer.title }}</div>
+    </div>
+    <input v-model="searchQuery" /> -->
     <div v-for="dataEducatiom in dataEducatioms" :key="dataEducatiom.id">
       <title-vue>
         <template v-slot:title>
@@ -72,11 +76,20 @@
                     class="input-text"
                     :class="{ inputBlur: data.status }"
                     :placeholder="data.input.placeholder"
-                    :value="data.input.value"
                     @input="handleOnchanInput($event, data)"
                     @blur="handleBlur(data)"
+                    v-model="searchQuery"
                   />
                 </template>
+                <!-- <input v-model="searchQuery" /> -->
+                <!-- <div>
+                  <div
+                    v-for="resultQuer in resultQuery"
+                    :key="resultQuer.id"
+                  >
+                    {{ resultQuer.title }}
+                  </div>
+                </div> -->
               </input-text-vue>
             </div>
           </div>
@@ -99,9 +112,9 @@
           </template>
         </error-message-vue>
       </div>
-      <div class="add-education">
+      <div class="add-education" @click="handleAddEducation">
         <img src="../../assets/education/add-education.png" class="icon-add" />
-        <span class="add-education-text">学歴を追加する</span>
+        <span class="add-education-text">学歴を追加する </span>
       </div>
     </div>
     <div></div>
@@ -115,7 +128,7 @@ import InputDateVue from "../slot/InputDate.vue";
 import InputTextVue from "../slot/InputText.vue";
 import LableVue from "../slot/Lable.vue";
 import ErrorMessageVue from "../slot/ErrorMessage.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "FormEducation",
   inject: ["formEducations"],
@@ -133,6 +146,7 @@ export default {
       // mesData: this.msg,
       // dataEducatioms: this.formEducations,
       inputSigin: [],
+      searchQuery: "",
     };
   },
   props: {
@@ -147,9 +161,18 @@ export default {
   },
 
   computed: {
-    // ...mapState({
-    //   dataEducatioms: (state) => state.formLists[0].formEducation,
-    // }),
+    ...mapState({
+      resources: (state) => state.resources,
+    }),
+    resultQuery() {
+      if (this.searchQuery) {
+        return this.resources.filter((item) => {
+          return item.title.startsWith(this.searchQuery);
+        });
+      } else {
+        return this.resources;
+      }
+    },
     ...mapGetters(["getEducatioms"]),
     dataEducatioms() {
       return this.getEducatioms.flat(1);
@@ -157,6 +180,7 @@ export default {
   },
   methods: {
     handleOnchanInput(event, form) {
+      console.log(event.target.value);
       form.status = false;
       form.messageError = "";
       const result = {
@@ -174,6 +198,20 @@ export default {
         // value.messageError = `This field  is required`;
         value.messageError = `このフィールド${value.lable}は必須です`;
       }
+    },
+    handleAddEducation() {
+      this.$store.dispatch("HANDLE_ADD_EDUCATION", {
+        id: 1,
+        lable: " 入学年月日",
+        required: "必須",
+        input: {
+          value: "",
+          type: "date",
+          placeholder: "テキストテキス",
+        },
+        messageError: "",
+        status: false,
+      });
     },
   },
 
@@ -249,18 +287,19 @@ export default {
   }
   .education-icon-srach-wapper {
     position: relative;
-    .inputBlur {
-      border: 1px solid red;
-      outline: none;
-    }
     .education-icon-seach {
       position: absolute;
       right: 10%;
       top: 13%;
     }
+    .inputBlur {
+      border: 1px solid red;
+      outline: none;
+    }
   }
   .add-education {
     margin-top: 12px;
+    cursor: pointer;
     .icon-add {
     }
     .add-education-text {
