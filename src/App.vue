@@ -1,22 +1,19 @@
 <template>
   <div id="app">
-    <div>
-      {{ currentPage }}
-    </div>
     <header-vue></header-vue>
+    <ProgressBarsVue />
     <div class="mock-ui-ctn">
-      <keep-alive>
-        <form-step-vue v-if="currentPage === 1"></form-step-vue>
-      </keep-alive>
-      <step2-form-vue
-        v-if="currentPage === 2"
-        @getForms="getForms"
-        @handleOnchanInput="handleOnchanInput"
-        ref="step2"
-      ></step2-form-vue>
-      <step2-form-vue v-if="currentPage === 3"></step2-form-vue>
-      <form-step3-vue v-if="currentPage === 4"></form-step3-vue>
-      <form-step4-vue v-if="currentPage === 5"></form-step4-vue>
+      <div>
+        <div class="mock-ui-title">雇用契約について</div>
+      </div>
+      <form-step-vue v-if="currentPage === 1"> </form-step-vue>
+      <step2-form-vue v-if="currentPage === 2">
+        <DateVue />
+      </step2-form-vue>
+      <step2-form-vue v-if="currentPage === 3"> <DateVue /> </step2-form-vue>
+      <form-step3-vue v-if="currentPage === 4">
+        <DateVue />
+      </form-step3-vue>
     </div>
   </div>
 </template>
@@ -27,7 +24,8 @@ import HeaderVue from "./components/Header.vue";
 import FormStepVue from "./components/step1/FormStep.vue";
 import Step2FormVue from "./components/step2/Step2Form.vue";
 import FormStep3Vue from "./components/step3/FormStep3.vue";
-import FormStep4Vue from "./components/step4/FormStep4.vue";
+import DateVue from "./components/slot/Date.vue";
+import ProgressBarsVue from "./components/ProgressBars.vue";
 import { mapState } from "vuex";
 export default {
   name: "App",
@@ -36,7 +34,8 @@ export default {
     FormStepVue,
     Step2FormVue,
     FormStep3Vue,
-    FormStep4Vue,
+    ProgressBarsVue,
+    DateVue,
     // ButtonVue,
   },
   data() {
@@ -67,15 +66,23 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
 }
 .mock-ui-ctn {
   width: 560px;
   margin: 0 auto;
+  .mock-ui-title {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 52px;
+  }
 }
 .input-text {
   padding: 12px;

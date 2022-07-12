@@ -1,6 +1,6 @@
 <template>
   <div class="form-step2-ctn">
-    {{formResidents[0].forms[0].input.value}}
+    {{ formResidents[0].forms[0].input.value }}
     <div class="formResident-check">
       <div>在留カード（外国籍の方はご記入ください</div>
       <label class="formResident-check-labe">
@@ -149,7 +149,6 @@ export default {
       // this.$emit("handleOnchanInput", this.inputSigin);
     },
     handleBlur(value) {
-      console.log("check bluer", value);
       if (!value.input.value.trim() && value.required) {
         value.status = true;
         // value.messageError = `This field  is required`;

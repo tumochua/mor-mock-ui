@@ -9,7 +9,7 @@
           >システムの本人アイコンに使用します。あなたの顔が分かる写真を登録してください。未登録の場合、姓名の頭文字が表示されます。顔写真見本のように撮影してください。また、背景は白、スーツ着用、身だしなみルールに沿って撮影をお願いいたします。
         </template>
         <template v-slot:showIng>
-          <div v-if="inputfile.url1">
+          <div v-if="inputfile.url1" style="text-align: center">
             <img :src="inputfile.url1" alt="error" class="show-img" />
           </div>
         </template>
@@ -26,14 +26,14 @@
         </template>
         <template v-slot:showIng>
           <div v-if="inputfile.url2">
-            <img :src="inputfile.url2" alt="error" class="show-img" />
+            <img :src="inputfile.url2" alt="error" class="show-img" required />
           </div>
         </template>
       </input-file-vue>
       <div class="form-sigin-infomation">
         <form-sign-information-vue></form-sign-information-vue>
       </div>
-      <!-- <div class="form-education">
+      <div class="form-education">
         <form-education-vue></form-education-vue>
       </div>
       <div class="form-insurance">
@@ -47,7 +47,7 @@
       </div>
       <div class="form-sigin-address">
         <form-sigin-address></form-sigin-address>
-      </div> -->
+      </div>
     </form>
   </div>
 </template>
@@ -56,22 +56,22 @@
 import InputFileVue from "../slot/InputFile.vue";
 
 import FormSignInformationVue from "./FormSignInformation.vue";
-// import FormEducationVue from "./FormEducation.vue";
-// import FormInsuranceVue from "./FormInsurance.vue";
-// import FormSalaryVue from "./FormSalary.vue";
-// import FormResidentVue from "./FormResident.vue";
-// import FormSiginAddress from "./FormSiginAddress.vue";
+import FormEducationVue from "./FormEducation.vue";
+import FormInsuranceVue from "./FormInsurance.vue";
+import FormSalaryVue from "./FormSalary.vue";
+import FormResidentVue from "./FormResident.vue";
+import FormSiginAddress from "./FormSiginAddress.vue";
 export default {
   name: "FormStep2Body",
   inject: ["siginInformations"],
   components: {
     InputFileVue,
     FormSignInformationVue,
-    // FormEducationVue,
-    // FormInsuranceVue,
-    // FormSalaryVue,
-    // FormResidentVue,
-    // FormSiginAddress,
+    FormEducationVue,
+    FormInsuranceVue,
+    FormSalaryVue,
+    FormResidentVue,
+    FormSiginAddress,
   },
   props: {
     // siginInformations: {
@@ -97,7 +97,7 @@ export default {
   data() {
     return {
       inputfile: {
-        url1: "https://d1hjkbq40fs2x4.cloudfront.net/2016-01-31/files/1045-1.jpg",
+        url1: require("../../assets/file/avatar.png"),
         url2: "",
       },
       inputSigin: [],
@@ -130,8 +130,24 @@ export default {
 <style scoped lang="scss">
 .form2-body-ctn {
   .show-img {
-    width: 100%;
-    height: 100%;
+    // width: 100%;
+    // height: 100%;
+  }
+  .form-salary {
+    margin-top: 16px;
+    background-color: #f1f2f7;
+  }
+  .form-resident {
+    background-color: #f1f2f7;
+    margin: 20px 0px;
+  }
+  .form-sigin-address {
+    background-color: #f1f2f7;
+    margin: 20px 0px;
+  }
+  .form-insurance {
+    background-color: #f1f2f7;
+    margin-top: 16px;
   }
 }
 </style>

@@ -22,6 +22,7 @@ export default {
   width: 100%;
   height: 64px;
   border-bottom: 1px solid #f1f2f7;
+
   .header-item {
     display: flex;
     margin-left: 20px;

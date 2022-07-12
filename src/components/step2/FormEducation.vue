@@ -1,9 +1,5 @@
 <template>
   <div class="form-step2-ctn">
-    <!-- <div v-for="resultQuer in resultQuery" :key="resultQuer.id">
-      <div>{{ resultQuer.title }}</div>
-    </div>
-    <input v-model="searchQuery" /> -->
     <div v-for="dataEducatiom in dataEducatioms" :key="dataEducatiom.id">
       <title-vue>
         <template v-slot:title>
@@ -78,18 +74,19 @@
                     :placeholder="data.input.placeholder"
                     @input="handleOnchanInput($event, data)"
                     @blur="handleBlur(data)"
-                    v-model="searchQuery"
+                    :value="data.input.value"
                   />
                 </template>
-                <!-- <input v-model="searchQuery" /> -->
-                <!-- <div>
-                  <div
-                    v-for="resultQuer in resultQuery"
-                    :key="resultQuer.id"
-                  >
-                    {{ resultQuer.title }}
+                <div v-if="inputSeach && data.input.type === 'seach'">
+                  <div v-for="(resultQuer, index) in resultQuery" :key="index">
+                    <div
+                      @click="handleClickSeach(data, resultQuer)"
+                      style="cursor: pointer"
+                    >
+                      {{ resultQuer.name }}
+                    </div>
                   </div>
-                </div> -->
+                </div>
               </input-text-vue>
             </div>
           </div>
@@ -100,7 +97,6 @@
                   class="input-text"
                   :placeholder="data.input.placeholder"
                   :value="data.input.value"
-                  @input="handleOnchanInput($event, data)"
                 />
               </template>
             </input-text-vue>
@@ -147,6 +143,7 @@ export default {
       // dataEducatioms: this.formEducations,
       inputSigin: [],
       searchQuery: "",
+      inputSeach: false,
     };
   },
   props: {
@@ -167,7 +164,9 @@ export default {
     resultQuery() {
       if (this.searchQuery) {
         return this.resources.filter((item) => {
-          return item.title.startsWith(this.searchQuery);
+          return item.value
+            .toLowerCase()
+            .startsWith(this.searchQuery.toLowerCase());
         });
       } else {
         return this.resources;
@@ -180,7 +179,10 @@ export default {
   },
   methods: {
     handleOnchanInput(event, form) {
-      console.log(event.target.value);
+      if (form.input.type === "seach") {
+        this.inputSeach = true;
+      }
+      this.searchQuery = event.target.value;
       form.status = false;
       form.messageError = "";
       const result = {
@@ -192,7 +194,7 @@ export default {
       // this.$emit("handleOnchanInput", this.inputSigin);
     },
     handleBlur(value) {
-      console.log("check bluer", value);
+      // this.inputSeach = false;
       if (!value.input.value.trim() && value.required) {
         value.status = true;
         // value.messageError = `This field  is required`;
@@ -212,6 +214,12 @@ export default {
         messageError: "",
         status: false,
       });
+    },
+    handleClickSeach(data, resultQuer) {
+      data.input.value = resultQuer.name;
+      this.inputSeach = false;
+      console.log("check data ", data);
+      console.log("check resultQuer", resultQuer);
     },
   },
 
@@ -290,7 +298,7 @@ export default {
     .education-icon-seach {
       position: absolute;
       right: 10%;
-      top: 13%;
+      top: 9px;
     }
     .inputBlur {
       border: 1px solid red;

@@ -54,13 +54,16 @@
               <div class="radio-ctn">
                 <div v-for="radio in form.radios" :key="radio.id">
                   <div class="radio-item">
-                    <input
-                      :type="radio.type"
-                      :class="{ inputBlur: form.status }"
-                      :value="radio.value"
-                      v-model="inputRadio"
-                    />
-                    <label class="radio-lable">{{ radio.lable }}</label>
+                    <label>
+                      <input
+                        :type="radio.type"
+                        :class="{ inputBlur: form.status }"
+                        :value="radio.value"
+                        v-model="inputRadio"
+                      />
+                      {{ radio.lable }}
+                    </label>
+                    <!-- <label class="radio-lable">{{ radio.lable }}</label> -->
                   </div>
                 </div>
               </div>
@@ -142,7 +145,6 @@ export default {
       // this.$emit("handleOnchanInput", this.inputSigin);
     },
     handleBlur(value) {
-      console.log(value);
       if (!value.input.value.trim()) {
         value.status = true;
         // value.messageError = `This field  is required`;

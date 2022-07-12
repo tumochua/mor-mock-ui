@@ -3,8 +3,8 @@
     <!-- Modal content -->
     <div class="modal-content">
       <span class="close" @click="handleClone">&times;</span>
-      <div>入社手続きの申請をします</div>
-      <confirm-vue>
+      <div class="model-title">入社手続きの申請をします</div>
+      <confirm-vue class="modal-confirm">
         <template v-slot:title> ご確認ください </template>
         <p>
           >入力ありがとうございました。
@@ -12,9 +12,11 @@
           手続きを申請する場合は「申請する」を選択してください。
         </p>
       </confirm-vue>
-      <div>
-        <button>戻る</button>
-        <button>申請する</button>
+      <div class="modal-btn-ctn">
+        <button class="btn-back" @click="handleReset">戻る</button>
+        <button class="btn-application" @click="handleApplication">
+          申請する
+        </button>
       </div>
     </div>
   </div>
@@ -31,11 +33,17 @@ export default {
     handleClone() {
       this.$emit("handleClone");
     },
+    handleApplication() {
+      this.$emit("handleApplication");
+    },
+    handleReset() {
+      this.$emit("handleReset");
+    },
   },
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .modal {
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -55,7 +63,38 @@ export default {
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  width: 608px;
+  .model-title {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 42px;
+  }
+  .modal-confirm {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .modal-btn-ctn {
+    .btn-back {
+      margin-right: 12px;
+      width: 132px;
+      height: 40px;
+      background: #ffffff;
+      border: 1px solid #6563ff;
+      border-radius: 4px;
+      color: #6563ff;
+      cursor: pointer;
+    }
+    .btn-application {
+      margin-right: 12px;
+      width: 132px;
+      height: 40px;
+      background: #6563ff;
+      border-radius: 4px;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+    }
+  }
 }
 
 /* The Close Button */

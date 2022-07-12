@@ -36,8 +36,21 @@
           <input :type="data.input.type" />
         </input-file-vue>
         <input-radio v-if="data.input.type === 'radio'">
-          <input :type="data.input.type" />
-          <label>{{ data.input.placeholder }}</label>
+          <div class="radio-ctn">
+            <div v-for="radio in data.radios" :key="radio.id">
+              <div class="radio-item">
+                <label>
+                  <input
+                    :type="radio.type"
+                    v-model="radioInput"
+                    :value="radio.value"
+                  />
+                  {{ radio.lable }}
+                </label>
+                <!-- <label class="radio-lable">{{ radio.lable }}</label> -->
+              </div>
+            </div>
+          </div>
         </input-radio>
         <error-message-vue>
           <template v-if="data.status" v-slot:errors>
@@ -74,6 +87,7 @@ export default {
       // formInsurances: this.formInsurance,
       //   datames: this.msg,
       inputSigin: [],
+      radioInput: "female",
     };
   },
   created() {
@@ -101,7 +115,6 @@ export default {
       // this.$emit("handleOnchanInput", this.inputSigin);
     },
     handleBlur(value) {
-      console.log("check bluer", value);
       if (!value.input.value.trim() && value.required) {
         value.status = true;
         // value.messageError = `This field  is required`;
@@ -125,5 +138,18 @@ export default {
   //   color: #ffffff;
   //   border-radius: 2px;
   // }
+}
+
+.radio-ctn {
+  width: 90%;
+  display: flex;
+  justify-content: space-around;
+  .radio-item {
+    margin-top: 8px;
+    padding: 12px 80px;
+    border-radius: 4px;
+    border: 1px solid #dcdcdc;
+    margin-left: -25px;
+  }
 }
 </style>

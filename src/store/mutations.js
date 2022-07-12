@@ -10,6 +10,9 @@ const mutations = {
     state.formLists[0].form2[1].forms.push(payload);
     // console.log("check payload ", payload);
   },
+  HANDLE_RESET(state) {
+    state.currentPage = 1;
+  },
 };
 
 export default mutations;

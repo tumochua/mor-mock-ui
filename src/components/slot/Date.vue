@@ -17,6 +17,7 @@ export default {
   display: flex;
   .page-date-icon {
     margin-right: 9px;
+    object-fit: contain;
   }
 }
 </style>

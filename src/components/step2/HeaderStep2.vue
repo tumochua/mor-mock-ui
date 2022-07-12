@@ -4,7 +4,6 @@
       <img src="../../assets/Confirm/ArrowLeft.png" class="hader-step2-icon" />
       <div>雇用契約に戻る</div>
     </div>
-    <progress-bar-vue></progress-bar-vue>
     <DateVue />
     <confirm-vue>
       <template v-slot:title>{{ formStep2.confirm }}</template>
@@ -16,13 +15,11 @@
 </template>
 
 <script>
-import ProgressBarVue from "../ProgressBar.vue";
 import DateVue from "../slot/Date.vue";
 import ConfirmVue from "../slot/Confirm.vue";
 export default {
   name: "HeaderStep2",
   components: {
-    ProgressBarVue,
     DateVue,
     ConfirmVue,
   },
