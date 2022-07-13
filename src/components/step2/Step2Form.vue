@@ -4,7 +4,9 @@
     <form-step2-body-vue
       @handleOnchanInput="handleOnchanInput"
     ></form-step2-body-vue>
-    <button @click="handleNextStep" class="btn-next">Next Step</button>
+    <button @click="handleNextStep" class="btn-next">
+      扶養控除申告の入力に進む
+    </button>
   </div>
 </template>
 
